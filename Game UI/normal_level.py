@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 import time
-
+from gameover import game_is_over
 class SpaceInvaders:
     def __init__(self):
         pygame.init()
@@ -422,6 +422,7 @@ class SpaceInvaders:
         self.screen.blit(high_score_text, (self.SCREEN_WIDTH - high_score_text.get_width() - 10, 10))
 
     def game_over(self):
+        game_is_over(self.score)
         self.running = False
 
 def start_normal_level(SCREEN):

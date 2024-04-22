@@ -2,9 +2,6 @@ import pygame
 import sys
 from button import Button
 import subprocess
-from easy_level import start_easy_level
-from normal_level import start_normal_level
-from hard_level import start_hard_level
  
 
 pygame.init()
@@ -55,6 +52,9 @@ def play():
         PLAY_BACK = Button(image=None, pos=(1700, 1000), text_input="BACK", font=get_font(40), base_color="White", hovering_color="Green")
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
+        from easy_level import start_easy_level
+        from normal_level import start_normal_level
+        from hard_level import start_hard_level
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -117,7 +117,7 @@ def main_menu():
 
         START_GAME_IMAGE = pygame.image.load("START GAME.png")
         START_GAME_BUTTON = Button(pos=(MENU_WIDTH // 2, MENU_HEIGHT // 2.2),
-                                   image=START_GAME_IMAGE)  # Using image for the play button
+                                   image=START_GAME_IMAGE)  # Using image for the play buttonw
 
         LEADERBOARD_IMAGE = pygame.image.load("LEADERBOARD.png")
         LEADERBOARD_BUTTON = Button(pos=(MENU_WIDTH // 2, MENU_HEIGHT // 1.8),
@@ -146,4 +146,7 @@ def main_menu():
 
         pygame.display.update()
 
-main_menu()
+def main_func():
+    main_menu()
+if __name__ == "__main__":
+    main_menu()

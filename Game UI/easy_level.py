@@ -2,7 +2,9 @@ import pygame
 import sys
 import random
 import time
-
+import gameover
+from gameover import game_is_over
+#from gameover import game_is_over
 class SpaceInvaders:
     def __init__(self):
         pygame.init()
@@ -81,7 +83,7 @@ class SpaceInvaders:
         self.wave_delay = 2
         self.last_spawn_time = 0
         self.last_wave_time = 0
-        self.bwave = 1  # Assuming bwave is used for something specific in wave handling
+        self.bwave = 5  # Assuming bwave is used for something specific in wave handling
         self.enemy_boss_max = 50
 
         # Score
@@ -106,7 +108,7 @@ class SpaceInvaders:
 
         # Health Bar settings
         self.BOSS_HEALTH_BAR_WIDTH = 50
-        self.BOSS_HEALTH_BAR_HEIGHT = 500 
+        self.BOSS_HEALTH_BAR_HEIGHT = 500
         self.BOSS_HEALTH_BAR_X = 100  # Distance from the left side of the screen
         self.BOSS_HEALTH_BAR_Y = 50  # Distance from the top of the screen
 
@@ -421,11 +423,13 @@ class SpaceInvaders:
         self.screen.blit(high_score_text, (self.SCREEN_WIDTH - high_score_text.get_width() - 10, 10))
 
     def game_over(self):
+        #aself.running = False
+        #main_game_over()
+        game_is_over(self.score)
         self.running = False
 
 def start_easy_level(SCREEN):
     game = SpaceInvaders()
     game.run()
 if __name__ == "__main__":
-    game = SpaceInvaders()
-    game.run()
+    start_easy_level(SCREEN=1)
