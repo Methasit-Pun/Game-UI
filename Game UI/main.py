@@ -3,8 +3,9 @@ import sys
 from button import Button
 import subprocess
 from easy_level import start_easy_level
-#from normal_level import start_normal_level
-#from hard_level import start_hard_level
+from normal_level import start_normal_level
+from hard_level import start_hard_level
+ 
 
 pygame.init()
 
@@ -65,9 +66,12 @@ def play():
                 if EASY_BUTTON.checkForInput(PLAY_MOUSE_POS):
                     show_loading_screen()
                     start_easy_level(SCREEN)
-                    #pygame.quit()
-                    #subprocess.run(["python", r"C:\Users\Asus\Desktop\Game UI\Game\main.py"])  # This runs the main.py script
-                    #sys.exit()
+                if NORMAL_BUTTON.checkForInput(PLAY_MOUSE_POS):
+                    show_loading_screen()
+                    start_normal_level(SCREEN)
+                if HARD_BUTTON.checkForInput(PLAY_MOUSE_POS):
+                    show_loading_screen()
+                    start_hard_level(SCREEN)
 
         pygame.display.update()
 

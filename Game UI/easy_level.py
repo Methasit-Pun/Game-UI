@@ -15,7 +15,7 @@ class SpaceInvaders:
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pygame.DOUBLEBUF)
         pygame.display.set_caption('Space Invaders Wave System')
 
-        # Load images
+        # Load images w
         self.background_img = pygame.image.load("img/wwwww.jpg").convert_alpha()
         self.player_img = pygame.image.load("img/spaceship.png").convert_alpha()
         self.bullet_img = pygame.image.load("img/bullet.png").convert_alpha()
@@ -23,12 +23,12 @@ class SpaceInvaders:
         self.enemy_img2 = pygame.image.load("img/enemy2.png").convert_alpha()
         self.enemy_img3 = pygame.image.load("img/enemy32.png").convert_alpha()
         self.boss_img = pygame.image.load("img/spaceboss2.png").convert_alpha()
-# font = pygame.font.Font("assets/font.ttf", 50)
-# text = font.render("Loading...", True, (255, 255, 255))
-# text_rect = text.get_rect(center=(1920 // 2, 1080 // 2))
-# SCREEN.blit(text, text_rect)
-# pygame.display.update()
-# pygame.time.delay(2000)
+        # font = pygame.font.Font("assets/font.ttf", 50)
+        # text = font.render("Loading...", True, (255, 255, 255))
+        # text_rect = text.get_rect(center=(1920 // 2, 1080 // 2))
+        # SCREEN.blit(text, text_rect)
+        # pygame.display.update()
+        # pygame.time.delay(2000)
         # Fonts
         self.wave_font = pygame.font.Font("assets/font.ttf", 70)
         self.score_font = pygame.font.Font("assets/font.ttf", 30)
@@ -37,12 +37,12 @@ class SpaceInvaders:
         self.initialize_game_settings()
 
     def initialize_game_settings(self):
-        # Player settings
+        # Player settings d
         self.player_width, self.player_height = self.player_img.get_size()
         self.player_width -= 20
         self.player_height -= 20
-        self.player_x = self.SCREEN_WIDTH // 2 - self.player_width // 2
-        self.player_y = 700
+        self.player_x = 960 #self.SCREEN_WIDTH // 2 - self.player_width // 2
+        self.player_y = 800
         self.player_speed = 10
 
         # Bullet settings
@@ -62,8 +62,8 @@ class SpaceInvaders:
         # Boss settings
         self.boss_health = 20
         self.boss_active = False
-        self.boss_x = self.SCREEN_WIDTH // 2 - self.enemy_width // 2
-        self.boss_y = 0
+        self.boss_x = 200#self.SCREEN_WIDTH // 2 - self.enemy_width // 2
+        self.boss_y = -100
         self.boss_last_shot_time = 0
         self.boss_shoot_interval = 2000  # milliseconds
         self.boss_width, self.boss_height = self.boss_img.get_size()
@@ -81,8 +81,8 @@ class SpaceInvaders:
         self.wave_delay = 2
         self.last_spawn_time = 0
         self.last_wave_time = 0
-        self.bwave = 10  # Assuming bwave is used for something specific in wave handling
-        self.enemy_boss_max = 50 
+        self.bwave = 1  # Assuming bwave is used for something specific in wave handling
+        self.enemy_boss_max = 50
 
         # Score
         self.score = 0
@@ -103,6 +103,13 @@ class SpaceInvaders:
         self.boss_laser_duration = 3000  # Laser visible for 3000 milliseconds (including warning)
         self.warning_duration = 2000  # Warning visible for 2000 milliseconds
         self.laser_size = 100
+
+        # Health Bar settings
+        self.BOSS_HEALTH_BAR_WIDTH = 50
+        self.BOSS_HEALTH_BAR_HEIGHT = 500 
+        self.BOSS_HEALTH_BAR_X = 100  # Distance from the left side of the screen
+        self.BOSS_HEALTH_BAR_Y = 50  # Distance from the top of the screen
+
 
 
 
@@ -149,8 +156,10 @@ class SpaceInvaders:
 
             # Boss conditions and drawing
             if self.boss_active:
+                self.screen.blit(self.background_img, (0, 0))
                 self.screen.blit(self.boss_img, (self.boss_x, 0))
                 self.boss_attack()
+                self.draw_boss_health_bar()
                 if pygame.time.get_ticks() - self.last_spawn_time > self.spawn_delay:
                     self.spawn_enemy()
                 if self.bullet_state == "fire":
@@ -172,25 +181,25 @@ class SpaceInvaders:
                 if event.type == pygame.QUIT:
                     self.running = False
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_a:
                         self.move_left = True
-                    elif event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_d:
                         self.move_right = True
-                    elif event.key == pygame.K_UP:
+                    elif event.key == pygame.K_w:
                         self.move_up = True
-                    elif event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_s:
                         self.move_down = True
                     elif event.key == pygame.K_SPACE and self.bullet_state == "ready":
                         self.fire_bullet(self.player_x, self.player_y)
 
                 if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_a:
                         self.move_left = False
-                    elif event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_d:
                         self.move_right = False
-                    elif event.key == pygame.K_UP:
+                    elif event.key == pygame.K_w:
                         self.move_up = False
-                    elif event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_s:
                         self.move_down = False
                 self.current_time = pygame.time.get_ticks()  # Get the current time
 
@@ -267,6 +276,10 @@ class SpaceInvaders:
                 if self.player_x < enemy['x'] + self.enemy_width and self.player_x + self.player_width > enemy['x'] and \
                 self.player_y < enemy['y'] + self.enemy_height and self.player_y + self.player_height > enemy['y']:
                     self.game_over()
+                if (self.player_x < self.boss_x + self.boss_width and self.player_x + self.player_width > self.boss_x and  \
+                self.player_y < self.boss_y + self.boss_height and \
+                self.player_y + self.player_height > self.boss_y):
+                    self.game_over()
 
             self.screen.blit(self.player_img, (self.player_x, self.player_y))
 
@@ -307,6 +320,18 @@ class SpaceInvaders:
     def update_game_state(self):
         # Add game logic for updating positions, checking collisions, etc.
         pass
+    def draw_boss_health_bar(self):
+        if self.boss_active:
+            # Calculate the current health proportion
+            current_health_ratio = self.boss_health / (20 + (self.wave_number // 10 * 5))
+            current_health_height = int(self.BOSS_HEALTH_BAR_HEIGHT * current_health_ratio)
+            
+            # Draw the background of the health bar (empty part)
+            pygame.draw.rect(self.screen, (128, 128, 128), (self.BOSS_HEALTH_BAR_X, self.BOSS_HEALTH_BAR_Y, self.BOSS_HEALTH_BAR_WIDTH, self.BOSS_HEALTH_BAR_HEIGHT))
+            
+            # Draw the current health (filled part)
+            pygame.draw.rect(self.screen, (0, 128, 0), (self.BOSS_HEALTH_BAR_X, self.BOSS_HEALTH_BAR_Y + self.BOSS_HEALTH_BAR_HEIGHT - current_health_height, self.BOSS_HEALTH_BAR_WIDTH, current_health_height))
+
 
     def boss_attack(self):
         current_time = pygame.time.get_ticks()
@@ -358,6 +383,9 @@ class SpaceInvaders:
         return False
 
     def reset_wave(self):
+        global player_x, player_y
+        self.player_x = 1000
+        self.player_y = 800
         self.wave_number += 1
         if self.wave_number % self.bwave == 0:
             self.boss_health = 20 + (self.wave_number // 10 * 5)
