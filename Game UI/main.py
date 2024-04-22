@@ -6,7 +6,6 @@ from easy_level import start_easy_level
 #from normal_level import start_normal_level
 #from hard_level import start_hard_level
 
-
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1920, 1080))
@@ -22,7 +21,6 @@ pygame.mixer.music.play(-1)  # -1 will loop the music indefinitely
 # Define function to get font
 def get_font(size):
     return pygame.font.Font("assets/font.ttf", size)
-
 # Define play function
 # Define play function
 def show_loading_screen():
@@ -35,7 +33,6 @@ def show_loading_screen():
     pygame.time.delay(2000)  # Simulate loading time, adjust as necessary
 
 def play():
-    show_loading_screen()
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -45,10 +42,10 @@ def play():
         EASY_BUTTON = Button(image=EASY_IMAGE, pos=(400, 650))
 
         HARD_IMAGE = pygame.image.load("HARD.png")
-        HARD_BUTTON = Button(image=HARD_IMAGE, pos=(950, 600))
+        HARD_BUTTON = Button(image=HARD_IMAGE, pos=(1500, 650))
 
         NORMAL_IMAGE = pygame.image.load("NORMAL.png")
-        NORMAL_BUTTON = Button(image=NORMAL_IMAGE, pos=(1500, 650))
+        NORMAL_BUTTON = Button(image=NORMAL_IMAGE, pos=(950, 600))
 
         EASY_BUTTON.update(SCREEN)
         HARD_BUTTON.update(SCREEN)
@@ -66,10 +63,11 @@ def play():
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
                 if EASY_BUTTON.checkForInput(PLAY_MOUSE_POS):
-                    #start_easy_level(SCREEN)
-                    pygame.quit()
-                    subprocess.run(["python", r"C:\Users\Asus\Desktop\Game UI\Game\main.py"])  # This runs the main.py script
-                    sys.exit()
+                    show_loading_screen()
+                    start_easy_level(SCREEN)
+                    #pygame.quit()
+                    #subprocess.run(["python", r"C:\Users\Asus\Desktop\Game UI\Game\main.py"])  # This runs the main.py script
+                    #sys.exit()
 
         pygame.display.update()
 
