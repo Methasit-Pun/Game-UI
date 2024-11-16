@@ -1,7 +1,3 @@
-Here’s a **README** file tailored for your Space Invaders game project, illustrating the learning of Object-Oriented Programming (OOP) principles in the Programming Methodology subject for Year 2, Semester 2 at Chulalongkorn University:
-
----
-
 # Space Invaders Game using Pygame
 
 ## Project Overview
