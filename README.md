@@ -5,6 +5,7 @@ This project is a Python-based Space Invaders game developed using the **Pygame*
 
 The game illustrates the practical application of OOP principles in programming, such as structuring the game components as objects and using classes to manage various elements like the player, aliens, bullets, and levels.
 
+
 ### Key Features:
 - **Multiple Levels**: Different difficulty levels including Easy, Normal, and Hard.
 - **Alien Invasion**: Multiple alien enemies with varying behaviors and speeds.
